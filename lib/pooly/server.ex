@@ -46,7 +46,7 @@ defmodule Pooly.Server do
         _from,
         %{workers: workers, monitors: monitors} = start_worker_supervisor
       ) do
-    {:reply, {length(workers), :ets.info(monitors, :size)}, state}
+    {:reply, {length(workers), :ets.info(monitors, :size)}, start_worker_supervisor}
   end
 
   def handle_call(:checkout, {from_pid, _ref}, %{workers: workers, monitors: monitors} = state) do
