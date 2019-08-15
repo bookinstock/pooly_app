@@ -1,11 +1,11 @@
 defmodule Pooly.WorkerSupervisor do
   use Supervisor
 
-  def start_link({_,_,_} = mfa) do
+  def start_link({_, _, _} = mfa) do
     Supervisor.start_link(__MODULE__, mfa)
   end
 
-  def init({m,f,a}) do
+  def init({m, f, a}) do
     worker_opts = [
       restart: :permanent,
       function: f
