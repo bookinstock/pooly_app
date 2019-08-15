@@ -41,8 +41,12 @@ defmodule Pooly.Server do
     {:ok, state}
   end
 
-  def handle_call(:status, _from, %{workers: workers, monitors: monitors} = start_worker_supervisor) do
-    {:reply, {length(workers)}, :ets.info(monitors, :size)}, state}
+  def handle_call(
+        :status,
+        _from,
+        %{workers: workers, monitors: monitors} = start_worker_supervisor
+      ) do
+    {:reply, {length(workers), :ets.info(monitors, :size)}, state}
   end
 
   def handle_call(:checkout, {from_pid, _ref}, %{workers: workers, monitors: monitors} = state) do
@@ -63,6 +67,7 @@ defmodule Pooly.Server do
         true = Process.demonitor(ref)
         true = :ets.delete(monitors, pid)
         {:no_reply, %{state | workers: [pid | workers]}}
+
       [] ->
         {:no_reply, state}
     end

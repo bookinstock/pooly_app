@@ -38,7 +38,6 @@ defmodule Stack1 do
   end
 end
 
-
 defmodule Stack2 do
   use GenServer
 
